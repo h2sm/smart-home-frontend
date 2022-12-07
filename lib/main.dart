@@ -45,7 +45,7 @@ class _DeviceListPageState extends State<DeviceListPage> {
       title: "Smart Home",
       theme: ThemeData(primaryColor: Colors.blueAccent),
       home: Scaffold(
-        appBar: AppBar(title: Text("Test Smart Home")),
+        appBar: null,
         body: const Login(),
       ),
     );

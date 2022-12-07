@@ -22,6 +22,7 @@ class _LogInState extends State<Login> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            inputHeaderText(),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
               child: TextFormField(
@@ -87,5 +88,15 @@ class _LogInState extends State<Login> {
 
   Padding addPadding() {
     return Padding(padding: EdgeInsets.all(10));
+  }
+
+  Container inputHeaderText() {
+    return Container(
+      alignment: Alignment.topLeft,
+      child: const Text(
+        "Smart Home Application",
+        style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w300),
+      )
+    );
   }
 }
