@@ -16,28 +16,50 @@ class _LogInState extends State<Login> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
+      alignment: AlignmentDirectional.topCenter,
       child: Form(
         key: _key,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextFormField(
-              validator: (value) {
-                return validateEnteredText(value);
-              },
-              onSaved: (String? value) {
-                email = value.toString();
-              },
+            Text(
+              "Login",
+              style: returnTextStyle(),
             ),
-            const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
-            TextFormField(
-              validator: (value) {
-                return validateEnteredText(value);
-              },
-              onSaved: (String? value) {
-                password = value.toString();
-              },
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+              child: TextFormField(
+                validator: (value) {
+                  return validateEnteredText(value);
+                },
+                onSaved: (String? value) {
+                  email = value.toString();
+                },
+                decoration: InputDecoration(
+                  labelText: "Enter your email",
+                  border: OutlineInputBorder(),
+                ),
+              ),
             ),
+            Text(
+              "Password",
+              style: returnTextStyle(),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+              child: TextFormField(
+                validator: (value) {
+                  return validateEnteredText(value);
+                },
+                onSaved: (String? value) {
+                  password = value.toString();
+                },
+                decoration: InputDecoration(
+                  labelText: "Enter your password",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -49,5 +71,13 @@ class _LogInState extends State<Login> {
       return 'Please enter your credentials';
     }
     return null;
+  }
+
+  TextStyle? returnTextStyle() {
+    return TextStyle(fontSize: 30.0, fontWeight: FontWeight.w300);
+  }
+
+  Padding addPadding() {
+    return Padding(padding: EdgeInsets.all(10));
   }
 }
