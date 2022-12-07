@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:testing/main.dart';
+
+import '../device.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,6 +17,17 @@ class _LogInState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Smart Home",
+      theme: ThemeData(primaryColor: Colors.blueAccent),
+      home: Scaffold(
+        appBar: null,
+        body: returnAllTexts(),
+      ),
+    );
+  }
+
+  Container returnAllTexts(){
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
       alignment: Alignment.center,
@@ -60,8 +74,8 @@ class _LogInState extends State<Login> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //     context, MaterialPageRoute(builder: (_) => HomePage()));
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => DeviceListPage()));
                 },
                 child: Text(
                   'Login',

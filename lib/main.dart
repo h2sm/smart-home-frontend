@@ -18,36 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: const DeviceListPage(),
-    );
-  }
-}
-
-class DeviceListPage extends StatefulWidget {
-  const DeviceListPage({super.key});
-
-  @override
-  State<StatefulWidget> createState() {
-    return _DeviceListPageState();
-  }
-}
-
-class _DeviceListPageState extends State<DeviceListPage> {
-  List<Device> listOfDevices = [
-    Device(1111, "Lampa", true),
-    Device(2222, "Holodilnik", false),
-    Device(222222, "Holodi2lnik", true),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Smart Home",
-      theme: ThemeData(primaryColor: Colors.blueAccent),
-      home: Scaffold(
-        appBar: null,
-        body: const Login(),
-      ),
+      home: Login(),
     );
   }
 }
