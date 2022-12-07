@@ -15,17 +15,13 @@ class _LogInState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 25.0),
-      alignment: AlignmentDirectional.topCenter,
+      padding: const EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
+      alignment: Alignment.center,
       child: Form(
         key: _key,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Login",
-              style: returnTextStyle(),
-            ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
               child: TextFormField(
@@ -41,10 +37,6 @@ class _LogInState extends State<Login> {
                 ),
               ),
             ),
-            Text(
-              "Password",
-              style: returnTextStyle(),
-            ),
             Padding(
               padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
               child: TextFormField(
@@ -59,7 +51,23 @@ class _LogInState extends State<Login> {
                   border: OutlineInputBorder(),
                 ),
               ),
-            )
+            ),
+            Container(
+              height: 50,
+              width: 250,
+              decoration: BoxDecoration(
+                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
+              child: TextButton(
+                onPressed: () {
+                  // Navigator.push(
+                  //     context, MaterialPageRoute(builder: (_) => HomePage()));
+                },
+                child: Text(
+                  'Login',
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+            ),
           ],
         ),
       ),
