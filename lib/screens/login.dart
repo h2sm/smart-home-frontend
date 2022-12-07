@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -8,10 +8,9 @@ class Login extends StatefulWidget {
 }
 
 class _LogInState extends State<Login> {
-  final _key =  GlobalKey<FormState>();
+  final _key = GlobalKey<FormState>();
   late String email;
   late String password;
-
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +19,35 @@ class _LogInState extends State<Login> {
       child: Form(
         key: _key,
         child: Column(
-
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            TextFormField(
+              validator: (value) {
+                return validateEnteredText(value);
+              },
+              onSaved: (String? value) {
+                email = value.toString();
+              },
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 16)),
+            TextFormField(
+              validator: (value) {
+                return validateEnteredText(value);
+              },
+              onSaved: (String? value) {
+                password = value.toString();
+              },
+            ),
+          ],
         ),
       ),
     );
   }
 
-
+  String? validateEnteredText(String? text) {
+    if (text == null || text.isEmpty) {
+      return 'Please enter your credentials';
+    }
+    return null;
+  }
 }

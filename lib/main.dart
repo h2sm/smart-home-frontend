@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing/device.dart';
+import 'package:testing/screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,12 +46,7 @@ class _DeviceListPageState extends State<DeviceListPage> {
       theme: ThemeData(primaryColor: Colors.blueAccent),
       home: Scaffold(
         appBar: AppBar(title: Text("Test Smart Home")),
-        body: ListView.builder(
-          itemCount: listOfDevices.length,
-          itemBuilder: (BuildContext context, int index) {
-            return DeviceListItem(listOfDevices[index]);
-          },
-        ),
+        body: const Login(),
       ),
     );
   }
