@@ -1,10 +1,10 @@
 class BaseAPI {
   static String base = "http://localhost:8082";
   static var api = "$base/api";
-  final _loginPath = "$api/login";
+  final _loginPath = "$api/auth/login";
 
   Map<String, String> headers = {
-    "Content-Type": "application/json; charset=UTF-8"
+    "Content-Type": "application/json"
   };
 
   get loginPath => _loginPath;

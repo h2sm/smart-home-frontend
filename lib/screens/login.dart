@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/main.dart';
 
 import '../device.dart';
@@ -11,9 +12,10 @@ class Login extends StatefulWidget {
 }
 
 class _LogInState extends State<Login> {
+  var auth = AuthAPI();
   final _key = GlobalKey<FormState>();
-  late String email;
-  late String password;
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class _LogInState extends State<Login> {
                 validator: (value) {
                   return validateEnteredText(value);
                 },
+                onChanged: (emailValue) => email = emailValue,
                 onSaved: (String? value) {
                   email = value.toString();
                 },
@@ -58,7 +61,10 @@ class _LogInState extends State<Login> {
                 validator: (value) {
                   return validateEnteredText(value);
                 },
+                onChanged: (passwordValue) => password = passwordValue,
                 onSaved: (String? value) {
+                  print(value);
+                  print("VALUE");
                   password = value.toString();
                 },
                 decoration: InputDecoration(
@@ -74,6 +80,7 @@ class _LogInState extends State<Login> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
+                  sendLoginRequest();
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => DeviceListPage()));
                 },
@@ -112,5 +119,9 @@ class _LogInState extends State<Login> {
         style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w300),
       )
     );
+  }
+  Future<void> sendLoginRequest() async {
+    var data = await auth.login(email.toString(), password.toString(), true);
+    print(data.body);
   }
 }

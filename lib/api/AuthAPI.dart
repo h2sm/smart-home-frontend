@@ -18,10 +18,11 @@ class AuthAPI extends BaseAPI {
       String email, String password, bool rememberMe) async {
     var body = jsonEncode(
         {'email': email, 'password': password, 'rememberMe': rememberMe});
-
-    http.Response response =
-        await http.post(super.loginPath, headers: super.headers, body: body);
-
+    print(body);
+    http.Response response = await http.post(
+        Uri.parse("http://localhost:8082/api/auth/login"),
+        headers: super.headers,
+        body: body);
     return response;
   }
 
