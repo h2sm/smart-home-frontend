@@ -26,6 +26,10 @@ class AuthAPI extends BaseAPI {
     return response;
   }
 
+  // Future<http.Response> sendTestRequest(String apikey) async {
+  //
+  // }
+
 // Future<http.Response> logout(int id, String token) async {
 //   var body = jsonEncode({'id': id, 'token': token});
 //

@@ -49,25 +49,23 @@ class _LogInState extends State<Login> {
                 onSaved: (String? value) {
                   email = value.toString();
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Enter your email",
                   border: OutlineInputBorder(),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
               child: TextFormField(
                 validator: (value) {
                   return validateEnteredText(value);
                 },
                 onChanged: (passwordValue) => password = passwordValue,
                 onSaved: (String? value) {
-                  print(value);
-                  print("VALUE");
                   password = value.toString();
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: "Enter your password",
                   border: OutlineInputBorder(),
                 ),
@@ -84,7 +82,7 @@ class _LogInState extends State<Login> {
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => DeviceListPage()));
                 },
-                child: Text(
+                child: const Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
