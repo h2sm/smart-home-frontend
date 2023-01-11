@@ -34,7 +34,7 @@ class _DeviceListPageState extends State<DeviceListPage> {
         appBar: null,
         body: ListView.builder(
             itemCount: listOfDevices.length,
-            itemBuilder: (BuildContext context, int index){
+            itemBuilder: (BuildContext context, int index) {
               return DeviceListItem(listOfDevices[index]);
             }),
       ),
@@ -42,25 +42,53 @@ class _DeviceListPageState extends State<DeviceListPage> {
   }
 }
 
-class DeviceListItem extends StatelessWidget {
+class DeviceListItem extends StatefulWidget {
   final Device device;
 
   const DeviceListItem(this.device);
 
   @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _DeviceListItem(device);
+  }
+}
+class _DeviceListItem extends State<DeviceListItem> {
+
+  Device device;
+  _DeviceListItem(this.device);
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(device.deviceName),
-          ),
-          Expanded(flex: 1, child: Text(device.serialNumber.toString())),
-          Expanded(flex: 1, child: Text(device.isOn ? "On" : "Off")),
-        ],
+    return Center(
+      child: Card(
+        child: SizedBox(
+            width: 300,
+            height: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(device.deviceName),
+                Text(device.serialNumber.toString()),
+                Text(device.isOn ? "On" : "Off"),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      device.isOn = !device.isOn;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
+                    ));
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Text('Flat Button'),
+                  ),
+                )
+              ],
+            )),
       ),
     );
   }
+
 }
