@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/main.dart';
+import 'package:testing/screens/home.dart';
 
 import '../device.dart';
 
@@ -80,7 +81,7 @@ class _LogInState extends State<Login> {
                 onPressed: () {
                   sendLoginRequest();
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => DeviceListPage()));
+                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
                 },
                 child: const Text(
                   'Login',

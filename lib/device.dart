@@ -27,25 +27,19 @@ class _DeviceListPageState extends State<DeviceListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Smart Home",
-      theme: ThemeData(primaryColor: Colors.blueAccent),
-      home: Scaffold(
-        appBar: null,
-        body: ListView.builder(
-            itemCount: listOfDevices.length,
-            itemBuilder: (BuildContext context, int index) {
-              return DeviceListItem(listOfDevices[index]);
-            }),
-      ),
-    );
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount: listOfDevices.length,
+        itemBuilder: (BuildContext context, int index) {
+          return DeviceListItem(listOfDevices[index]);
+        });
   }
 }
 
 class DeviceListItem extends StatefulWidget {
   final Device device;
 
-  const DeviceListItem(this.device);
+  const DeviceListItem(this.device, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -53,9 +47,10 @@ class DeviceListItem extends StatefulWidget {
     return _DeviceListItem(device);
   }
 }
-class _DeviceListItem extends State<DeviceListItem> {
 
+class _DeviceListItem extends State<DeviceListItem> {
   Device device;
+
   _DeviceListItem(this.device);
 
   @override
@@ -77,12 +72,13 @@ class _DeviceListItem extends State<DeviceListItem> {
                       device.isOn = !device.isOn;
                     });
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
+                      content: Text(
+                          "Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
                     ));
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(12.0),
-                    child: Text('Flat Button'),
+                    child: Text('Switch power'),
                   ),
                 )
               ],
@@ -90,5 +86,4 @@ class _DeviceListItem extends State<DeviceListItem> {
       ),
     );
   }
-
 }
