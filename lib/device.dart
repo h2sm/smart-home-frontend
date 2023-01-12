@@ -50,6 +50,8 @@ class DeviceListItem extends StatefulWidget {
 
 class _DeviceListItem extends State<DeviceListItem> {
   Device device;
+  var borderRadius = const BorderRadius.all(Radius.circular(32));
+
 
   _DeviceListItem(this.device);
 
@@ -57,32 +59,27 @@ class _DeviceListItem extends State<DeviceListItem> {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        child: SizedBox(
-            width: 300,
-            height: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(device.deviceName),
-                Text(device.serialNumber.toString()),
-                Text(device.isOn ? "On" : "Off"),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      device.isOn = !device.isOn;
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          "Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
-                    ));
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text('Switch power'),
-                  ),
-                )
-              ],
-            )),
+        shape: RoundedRectangleBorder(borderRadius: borderRadius),
+        child: ListTile(
+          leading: FlutterLogo(size: 56.0),
+          title: Text(device.deviceName),
+          subtitle: Text(device.isOn ? "On" : "Off"),
+          trailing: Icon(Icons.more_vert),
+          onTap: () {
+            setState(() {
+              device.isOn = !device.isOn;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  "Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
+            ));
+          },
+          onLongPress: () {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Чо блядь"),
+            ));
+          },
+        ),
       ),
     );
   }
