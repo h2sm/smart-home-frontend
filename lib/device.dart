@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testing/screens/deviceinformation.dart';
 
 class Device {
   int serialNumber;
@@ -52,7 +53,6 @@ class _DeviceListItem extends State<DeviceListItem> {
   Device device;
   var borderRadius = const BorderRadius.all(Radius.circular(32));
 
-
   _DeviceListItem(this.device);
 
   @override
@@ -75,9 +75,10 @@ class _DeviceListItem extends State<DeviceListItem> {
             ));
           },
           onLongPress: () {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Чо блядь"),
-            ));
+            Navigator.push(context,
+                MaterialPageRoute<Widget>(builder: (BuildContext context) {
+              return DeviceInformation(device);
+            }));
           },
         ),
       ),
