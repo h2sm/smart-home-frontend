@@ -10,12 +10,37 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  static const List<Tab> myTabs = <Tab>[
+    Tab(text: 'My Devices'),
+    Tab(text: 'Settings'),
+  ];
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: myTabs.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: null,
+        bottomNavigationBar: TabBar(
+          controller: _tabController,
+          tabs: myTabs,
+          labelColor: Colors.black,
+          unselectedLabelColor: Colors.blue,
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
