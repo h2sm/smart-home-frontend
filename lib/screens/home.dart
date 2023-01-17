@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testing/device.dart';
+import 'package:testing/screens/devices_list.dart';
+import 'package:testing/screens/settings_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,47 +12,35 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  static const List<Tab> myTabs = <Tab>[
-    Tab(text: 'My Devices'),
-    Tab(text: 'Settings'),
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+  List<BottomNavigationBarItem> myTabs = <BottomNavigationBarItem>[
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "My devices"),
+    BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
   ];
 
-  late TabController _tabController;
+  List<Widget> _widgetOptions = <Widget>[
+    DevicesList(),
+    SettingsPage(),
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: myTabs.length, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: null,
-        bottomNavigationBar: TabBar(
-          controller: _tabController,
-          tabs: myTabs,
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.blue,
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget> [
-              Text("Smart Home Application", style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w300)),
-              Padding(padding: EdgeInsets.all(15)),
-              DeviceListPage(),
-            ],
+          appBar: null,
+          bottomNavigationBar: BottomNavigationBar(
+            items: myTabs,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
           ),
-        )
+          body: _widgetOptions.elementAt(_selectedIndex),
       ),
     );
   }
