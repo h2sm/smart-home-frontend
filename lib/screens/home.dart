@@ -14,12 +14,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  List<BottomNavigationBarItem> myTabs = <BottomNavigationBarItem>[
+  final List<BottomNavigationBarItem> myTabs = <BottomNavigationBarItem>[
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "My devices"),
     BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
   ];
 
-  List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     DevicesList(),
     SettingsPage(),
   ];
