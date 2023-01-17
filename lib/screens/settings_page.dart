@@ -22,7 +22,8 @@ class _SettingsPageState extends State<SettingsPage> {
           returnSettingCard("Add new device"),
           returnSettingCard("Delete device"),
           returnSettingCard("Change password"),
-          returnSettingCard("Delete Account")
+          returnSettingCard("Delete Account"),
+          returnSettingCard("Log off")
         ],
       ),
     );
