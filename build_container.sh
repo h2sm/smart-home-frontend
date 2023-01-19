@@ -1,0 +1,1 @@
+docker build -t flutter-web . && docker run -p 80:8000 flutter-web
