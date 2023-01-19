@@ -6,8 +6,9 @@ class Device {
   int serialNumber;
   String deviceName;
   bool isOn;
+  String roomLocation;
 
-  Device(this.serialNumber, this.deviceName, this.isOn);
+  Device(this.serialNumber, this.deviceName, this.isOn, this.roomLocation);
 }
 
 class DeviceListPage extends StatefulWidget {
@@ -21,9 +22,9 @@ class DeviceListPage extends StatefulWidget {
 
 class _DeviceListPageState extends State<DeviceListPage> {
   List<Device> listOfDevices = [
-    Device(1111, "Lampa", true),
-    Device(2222, "Holodilnik", false),
-    Device(222222, "Holodi2lnik", true),
+    Device(1111, "Lampa", true, "Living room"),
+    Device(2222, "Holodilnik", false, "Kitchen"),
+    Device(222222, "Torscher", true, "Bedroom"),
   ];
 
   @override
