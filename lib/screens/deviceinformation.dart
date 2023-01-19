@@ -13,6 +13,10 @@ class DeviceInformation extends StatelessWidget {
     var isOn = device.isOn ? "On" : "Off";
     var deviceLocation = device.roomLocation;
     var deviceName = device.deviceName;
+
+    TextStyle returnTextStyle(){
+      return TextStyle(fontSize: 20.0, fontWeight: FontWeight.w200);
+    }
     return Scaffold(
       appBar: AppBar(title: const Text('Device information')),
       body: Center(
@@ -33,9 +37,9 @@ class DeviceInformation extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 30.0, fontWeight: FontWeight.w300),
                   ),
-                  Text('Serial number is $serial'),
-                  Text('Located in $deviceLocation'),
-                  Text('Currently device is $isOn'),
+                  Text('Serial number is $serial', style: returnTextStyle()),
+                  Text('Located in $deviceLocation', style: returnTextStyle()),
+                  Text('Currently device is $isOn', style: returnTextStyle()),
                 ],
               ),
             ),
