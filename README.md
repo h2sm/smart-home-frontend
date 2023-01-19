@@ -9,6 +9,7 @@
 3. Включать и выключать их
 4. Отображать подробную информацию о каждом устройстве
 5. И еще много прикольного
-   ![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+
+![Alt Text](https://raw.githubusercontent.com/h2sm/smart-home-frontend/main/gif_showoff_flutter.gif)
 
 ## Пока это бутафория: приложение отображает статичные данные и виджеты, в послдедствии оно будет полностью рабочим
