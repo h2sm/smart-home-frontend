@@ -10,6 +10,6 @@
 4. Отображать подробную информацию о каждом устройстве
 5. И еще много прикольного
 
-![Alt Text](https://raw.githubusercontent.com/h2sm/smart-home-frontend/main/gif_showoff_flutter.gif)
+![Alt Text](https://github.com/h2sm/smart-home-frontend/blob/main/gif_showoff.gif)
 
 ## Пока это бутафория: приложение отображает статичные данные и виджеты, в послдедствии оно будет полностью рабочим
