@@ -1,14 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/screens/deviceinformation.dart';
 
 class Device {
-  int serialNumber;
-  String deviceName;
-  bool isOn;
-  String roomLocation;
+  final int id;
+  final String deviceName;
+  final String deviceLocation;
+  final int deviceSerial;
+  final String localIpAddress;
+  bool isOn = true;
 
-  Device(this.serialNumber, this.deviceName, this.isOn, this.roomLocation);
+  Device({
+    required this.id,
+    required this.deviceName,
+    required this.deviceLocation,
+    required this.deviceSerial,
+    required this.localIpAddress,
+  });
+
+  factory Device.fromJson(Map<String, dynamic> json) {
+    return Device(
+      id: json['deviceId'],
+      deviceName: json['deviceName'],
+      deviceLocation: json['deviceLocation'],
+      localIpAddress: json['localDeviceIp'],
+      deviceSerial: json['deviceSerial'],
+    );
+  }
 }
 
 class DeviceListPage extends StatefulWidget {
@@ -21,21 +40,39 @@ class DeviceListPage extends StatefulWidget {
 }
 
 class _DeviceListPageState extends State<DeviceListPage> {
-  List<Device> listOfDevices = [
-    Device(1111, "Lampa", true, "Living room"),
-    Device(2222, "Holodilnik", false, "Kitchen"),
-    Device(222222, "Torscher", true, "Bedroom"),
-  ];
+  late List _listOfDevices;
+  _getListOfDevices() async {
+    var auth = AuthAPI();
+    _listOfDevices = await auth.getListOfDevices();
+    print('cho');
+    print(_listOfDevices);
+    return auth.getListOfDevices();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: listOfDevices.length,
-        itemBuilder: (BuildContext context, int index) {
-          return DeviceListItem(listOfDevices[index]);
-        });
+    return FutureBuilder(builder: (context, projectSnap) {
+      if (!projectSnap.hasData) {
+        return const Center(child: CircularProgressIndicator());
+      } else {
+        return ListView.builder(
+          itemCount: _listOfDevices.length,
+          itemBuilder: (context, index) {
+            return DeviceListItem(_listOfDevices[index]);
+          },
+        );
+      }
+    },
+      future: _getListOfDevices(),
+    );
   }
+
+//   return ListView.builder(
+//       shrinkWrap: true,
+//       itemCount: listOfDevices.length,
+//       itemBuilder: (BuildContext context, int index) {
+//         return DeviceListItem(listOfDevices[index]);
+//       });
 }
 
 class DeviceListItem extends StatefulWidget {
@@ -72,14 +109,16 @@ class _DeviceListItem extends State<DeviceListItem> {
             });
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
-                  "Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
+                  "Device ${device.deviceName} is now ${device.isOn
+                      ? "on"
+                      : "off"}"),
             ));
           },
           onLongPress: () {
             Navigator.push(context,
                 MaterialPageRoute<Widget>(builder: (BuildContext context) {
-              return DeviceInformation(device);
-            }));
+                  return DeviceInformation(device);
+                }));
           },
         ),
       ),

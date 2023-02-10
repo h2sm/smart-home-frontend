@@ -9,9 +9,9 @@ class DeviceInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var serial = device.serialNumber.toString();
+    var serial = device.deviceSerial;
     var isOn = device.isOn ? "On" : "Off";
-    var deviceLocation = device.roomLocation;
+    var deviceLocation = device.deviceLocation;
     var deviceName = device.deviceName;
 
     TextStyle returnTextStyle(){

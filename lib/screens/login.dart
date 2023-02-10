@@ -1,9 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:testing/api/AuthAPI.dart';
-import 'package:testing/main.dart';
 import 'package:testing/screens/home.dart';
 
-import '../device.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -121,6 +121,6 @@ class _LogInState extends State<Login> {
   }
   Future<void> sendLoginRequest() async {
     var data = await auth.login(email.toString(), password.toString(), true);
-    print(data.body);
+    // print(data.body);
   }
 }
