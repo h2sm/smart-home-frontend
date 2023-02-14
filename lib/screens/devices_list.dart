@@ -1,9 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../device.dart';
 
 class DevicesList extends StatefulWidget {
   const DevicesList({super.key});
+
+  static Route route() {
+    return MaterialPageRoute(
+      builder: (context) => DevicesList(),
+    );
+  }
+
 
   @override
   State<StatefulWidget> createState() {

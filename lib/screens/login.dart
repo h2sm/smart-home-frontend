@@ -1,126 +1,138 @@
-import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:testing/api/AuthAPI.dart';
-import 'package:testing/screens/home.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:testing/screens/devices_list.dart';
 
+import '../bloc/login/LoginBloc.dart';
+import '../bloc/login/loginEvent/LoginEvent.dart';
+import '../bloc/login/state/LoginState.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
-
+class LoginView extends StatelessWidget {
   @override
-  _LogInState createState() => _LogInState();
+  Widget build(BuildContext context) {
+    return BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        if (state.status == LoginStatus.success) {
+          Navigator.of(context).pushReplacement(DevicesList.route());
+        }
+        if (state.status == LoginStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }
+      },
+      child: const _LoginForm(),
+    );
+  }
 }
 
-class _LogInState extends State<Login> {
-  var auth = AuthAPI();
-  final _key = GlobalKey<FormState>();
-  String? email;
-  String? password;
+class _LoginForm extends StatelessWidget {
+  const _LoginForm({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Smart Home",
-      theme: ThemeData(primaryColor: Colors.blueAccent),
-      home: Scaffold(
-        appBar: null,
-        body: returnAllTexts(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+        centerTitle: true,
       ),
-    );
-  }
-
-  Container returnAllTexts(){
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 60.0, horizontal: 25.0),
-      alignment: Alignment.center,
-      child: Form(
-        key: _key,
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            inputHeaderText(),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: TextFormField(
-                validator: (value) {
-                  return validateEnteredText(value);
-                },
-                onChanged: (emailValue) => email = emailValue,
-                onSaved: (String? value) {
-                  email = value.toString();
-                },
-                decoration: const InputDecoration(
-                  labelText: "Enter your email",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
-              child: TextFormField(
-                validator: (value) {
-                  return validateEnteredText(value);
-                },
-                onChanged: (passwordValue) => password = passwordValue,
-                onSaved: (String? value) {
-                  password = value.toString();
-                },
-                decoration: const InputDecoration(
-                  labelText: "Enter your password",
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
-                onPressed: () {
-                  sendLoginRequest();
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => HomeScreen()));
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
-              ),
-            ),
+            _LoginEmail(),
+            const SizedBox(height: 30.0),
+            _LoginPassword(),
+            const SizedBox(height: 30.0),
+            _SubmitButton(),
+            const SizedBox(height: 30.0),
+            _CreateAccountButton(),
           ],
         ),
       ),
     );
   }
+}
 
-  String? validateEnteredText(String? text) {
-    if (text == null || text.isEmpty) {
-      return 'Please enter your credentials';
-    }
-    return null;
-  }
+class _LoginEmail extends StatelessWidget {
+  _LoginEmail({
+    Key? key,
+  }) : super(key: key);
 
-  TextStyle? returnTextStyle() {
-    return TextStyle(fontSize: 30.0, fontWeight: FontWeight.w300);
-  }
-
-  Padding addPadding() {
-    return Padding(padding: EdgeInsets.all(10));
-  }
-
-  Container inputHeaderText() {
-    return Container(
-      alignment: Alignment.topLeft,
-      child: const Text(
-        "Smart Home Application",
-        style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.w300),
-      )
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 2,
+      child: TextField(
+        onChanged: ((value) {
+          context.read<LoginBloc>().add(LoginEmailChangedEvent(email: value));
+        }),
+        decoration: const InputDecoration(hintText: 'Email'),
+      ),
     );
   }
-  Future<void> sendLoginRequest() async {
-    var data = await auth.login(email.toString(), password.toString(), true);
-    // print(data.body);
+}
+
+class _LoginPassword extends StatelessWidget {
+  _LoginPassword({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 2,
+      child: TextField(
+        onChanged: ((value) {
+          context
+              .read<LoginBloc>()
+              .add(LoginPasswordChangedEvent(password: value));
+        }),
+        obscureText: true,
+        decoration: const InputDecoration(
+          hintText: 'Password',
+        ),
+      ),
+    );
+  }
+}
+
+class _SubmitButton extends StatelessWidget {
+  _SubmitButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        context.read<LoginBloc>().add(
+          LoginButtonPressedEvent(),
+        );
+      },
+      child: const Text('Login'),
+    );
+  }
+}
+
+class _CreateAccountButton extends StatelessWidget {
+  const _CreateAccountButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => SignupPage(),
+        //   ),
+        // );
+      },
+      child: const Text('Create Account'),
+    );
   }
 }

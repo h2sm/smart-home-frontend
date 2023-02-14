@@ -1,19 +1,19 @@
 import 'package:bloc/bloc.dart';
+import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/bloc/login/loginEvent/LoginEvent.dart';
-import 'package:testing/bloc/login/service/auth_service.dart';
 import 'package:testing/bloc/login/state/LoginState.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc({
-    required AuthService authService,
-  })  : _authService = authService,
+    required AuthAPI authAPI,
+  })  : _api = authAPI,
         super(LoginState()) {
     on<LoginButtonPressedEvent>(_handleLoginWithEmailAndPasswordEvent);
     on<LoginEmailChangedEvent>(_handleLoginEmailChangedEvent);
     on<LoginPasswordChangedEvent>(_handleLoginPasswordChangedEvent);
   }
 
-  final AuthService _authService;
+  final AuthAPI _api;
 
   // @override
   // Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -51,10 +51,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     try {
-      await _authService.signInWithEmailAndPassword(
-        email: state.email,
-        password: state.password,
-      );
+      var res = await _api.login(state.email, state.password, true);
 
       emit(state.copyWith(message: 'Success', status: LoginStatus.success));
     } catch (e) {

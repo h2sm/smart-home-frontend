@@ -35,7 +35,7 @@ class AuthAPI extends BaseAPI {
     return response;
   }
 
-   Future getListOfDevices() async {
+  Future getListOfDevices() async {
     var parsedObjects;
     var value = await storage.read(key: 'token');
     var header = {"Authorization": value.toString()};
