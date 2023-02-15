@@ -6,7 +6,7 @@ import 'BaseAPI.dart';
 
 class AuthAPI extends BaseAPI {
   final storage = const FlutterSecureStorage();
-  late String _ApiKey;
+  static late String _ApiKey;
 
   Future<http.Response> signUp(
       String email, String password, bool rememberMe) async {
@@ -35,15 +35,16 @@ class AuthAPI extends BaseAPI {
     return response;
   }
 
-  Future getListOfDevices() async {
-    var parsedObjects;
+  Future<List<Device>> getListOfDevices() async {
+    List<Device> parsedObjects = <Device>[];
     var value = await storage.read(key: 'token');
     var header = {"Authorization": value.toString()};
     await http
         .get(Uri.parse("http://localhost:8082/api/devices/list"),
             headers: header)
         .then((response) {
-      parsedObjects = Device.fromJson(jsonDecode(response.body.toString()));
+      Iterable l = json.decode(response.body);
+      parsedObjects = List<Device>.from(l.map((dev) => Device.fromJson(dev)));
     }).onError((error, stackTrace) => Future.error(error.toString()));
     return parsedObjects;
   }

@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testing/api/AuthAPI.dart';
 
 import '../device.dart';
 
 class DevicesList extends StatefulWidget {
-  const DevicesList({super.key});
+
+  // DevicesList(AuthAPI authAPI){
+  //   _api=authAPI;
+  // }
 
   static Route route() {
     return MaterialPageRoute(

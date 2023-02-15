@@ -40,15 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
       create: (context) => LoginBloc(authAPI: AuthAPI()),
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          if (state is LoginInitial) {
             return LoginView();
-          } else if (state is LoginInProgress) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return LoginView();
-          }
         },
       ),
     );

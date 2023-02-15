@@ -52,7 +52,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     try {
       var res = await _api.login(state.email, state.password, true);
-
+      print(res.body.toString());
       emit(state.copyWith(message: 'Success', status: LoginStatus.success));
     } catch (e) {
       emit(state.copyWith(message: e.toString(), status: LoginStatus.failure));

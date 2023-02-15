@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/screens/deviceinformation.dart';
 
@@ -42,15 +43,16 @@ class DeviceListPage extends StatefulWidget {
 class _DeviceListPageState extends State<DeviceListPage> {
   late List _listOfDevices;
   _getListOfDevices() async {
-    var auth = AuthAPI();
-    _listOfDevices = await auth.getListOfDevices();
-    print('cho');
-    print(_listOfDevices);
-    return auth.getListOfDevices();
+  //   var auth = AuthAPI();
+  //   _listOfDevices = await auth.getListOfDevices();
+  //   print('cho');
+  //   print(_listOfDevices);
+  //   return auth.getListOfDevices();
   }
 
   @override
   Widget build(BuildContext context) {
+    //return BlocProvider(create: create)
     return FutureBuilder(builder: (context, projectSnap) {
       if (!projectSnap.hasData) {
         return const Center(child: CircularProgressIndicator());

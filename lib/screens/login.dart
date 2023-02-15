@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/screens/devices_list.dart';
+import 'package:testing/screens/home.dart';
 
 import '../bloc/login/LoginBloc.dart';
 import '../bloc/login/loginEvent/LoginEvent.dart';
@@ -13,7 +15,8 @@ class LoginView extends StatelessWidget {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status == LoginStatus.success) {
-          Navigator.of(context).pushReplacement(DevicesList.route());
+
+          Navigator.of(context).pushReplacement(HomeScreen.route(context.read<AuthAPI>()));
         }
         if (state.status == LoginStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(
