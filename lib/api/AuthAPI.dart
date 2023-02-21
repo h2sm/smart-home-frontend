@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:testing/device.dart';
@@ -6,7 +7,7 @@ import 'BaseAPI.dart';
 
 class AuthAPI extends BaseAPI {
   final storage = const FlutterSecureStorage();
-  static late String _ApiKey;
+  static late String apiKey;
 
   Future<http.Response> signUp(
       String email, String password, bool rememberMe) async {
@@ -28,24 +29,32 @@ class AuthAPI extends BaseAPI {
         headers: super.headers,
         body: body);
     var parsed = jsonDecode(response.body.toString());
-    // print('${parsed.runtimeType} : $parsed');
-    _ApiKey = parsed['credentials'];
     print(parsed['credentials']);
-    await storage.write(key: 'token', value: 'Bearer ' + parsed['credentials']);
+    apiKey = parsed['credentials'];
     return response;
   }
 
-  Future<List<Device>> getListOfDevices() async {
+  static Future<List<Device>> getListOfDevices() async {
     List<Device> parsedObjects = <Device>[];
-    var value = await storage.read(key: 'token');
-    var header = {"Authorization": value.toString()};
-    await http
-        .get(Uri.parse("http://localhost:8082/api/devices/list"),
-            headers: header)
-        .then((response) {
-      Iterable l = json.decode(response.body);
+    var header = {
+      "Authorization": 'Bearer ' + apiKey,
+      "Content-Type": "application/json",
+    };
+    print(header);
+    try {
+      var res = await http.get(Uri.parse("http://localhost:8082/api/devices/list"), headers: header);
+      print(res.body.toString());
+      Iterable l = json.decode(res.body);
       parsedObjects = List<Device>.from(l.map((dev) => Device.fromJson(dev)));
-    }).onError((error, stackTrace) => Future.error(error.toString()));
+    } catch (e) {
+      print(e.toString());
+    }
+
     return parsedObjects;
+  }
+
+  // set apiKey(String val) => apiKey = val;
+  void set api(String val) {
+    apiKey = val;
   }
 }

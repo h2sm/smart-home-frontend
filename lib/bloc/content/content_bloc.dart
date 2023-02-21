@@ -16,8 +16,8 @@ class ContentBloc extends Bloc<ContentEvent, ContentState>{
       ContentRequested event,
       Emitter<ContentState> emit,
       ) async {
-    var deviceList = _api.getListOfDevices();
-    emit(state.copyWith(listOfDevice: event.listOfDevices));
+    // var deviceList = _api.getListOfDevices();
+    //emit(state.copyWith(listOfDevice: event.listOfDevices));
   }
 
   Future<void> _handleObtainedRequest(

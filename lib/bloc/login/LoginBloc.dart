@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/bloc/login/loginEvent/LoginEvent.dart';
@@ -53,7 +55,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       var res = await _api.login(state.email, state.password, true);
       print(res.body.toString());
-      emit(state.copyWith(message: 'Success', status: LoginStatus.success));
+      var token = jsonDecode(res.body.toString())['credentials'];
+      emit(state.copyWith(message: 'Success', status: LoginStatus.success, apiKey: token));
     } catch (e) {
       emit(state.copyWith(message: e.toString(), status: LoginStatus.failure));
     }

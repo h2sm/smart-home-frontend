@@ -15,8 +15,13 @@ class LoginView extends StatelessWidget {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.status == LoginStatus.success) {
-
-          Navigator.of(context).pushReplacement(HomeScreen.route(context.read<AuthAPI>()));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.apiKey),
+            ),
+          );//здесь передаем апи
+          AuthAPI.apiKey = state.apiKey;
+          Navigator.of(context).pushReplacement(HomeScreen.route(state.apiKey));
         }
         if (state.status == LoginStatus.failure) {
           ScaffoldMessenger.of(context).showSnackBar(

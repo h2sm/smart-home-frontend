@@ -8,7 +8,7 @@ class Device {
   final int id;
   final String deviceName;
   final String deviceLocation;
-  final int deviceSerial;
+  final String deviceSerial;
   final String localIpAddress;
   bool isOn = true;
 
@@ -22,11 +22,11 @@ class Device {
 
   factory Device.fromJson(Map<String, dynamic> json) {
     return Device(
-      id: json['deviceId'],
+      id: json['id'],
       deviceName: json['deviceName'],
       deviceLocation: json['deviceLocation'],
-      localIpAddress: json['localDeviceIp'],
       deviceSerial: json['deviceSerial'],
+      localIpAddress: json['localIpAddress'],
     );
   }
 }
@@ -41,30 +41,39 @@ class DeviceListPage extends StatefulWidget {
 }
 
 class _DeviceListPageState extends State<DeviceListPage> {
-  late List _listOfDevices;
-  _getListOfDevices() async {
-  //   var auth = AuthAPI();
-  //   _listOfDevices = await auth.getListOfDevices();
-  //   print('cho');
-  //   print(_listOfDevices);
-  //   return auth.getListOfDevices();
+  Future<List<Device>> _getListOfDevices() async {
+    return Future.delayed(Duration(seconds: 2), () {
+      print(AuthAPI.apiKey);
+      return AuthAPI.getListOfDevices();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    //return BlocProvider(create: create)
-    return FutureBuilder(builder: (context, projectSnap) {
-      if (!projectSnap.hasData) {
-        return const Center(child: CircularProgressIndicator());
-      } else {
-        return ListView.builder(
-          itemCount: _listOfDevices.length,
-          itemBuilder: (context, index) {
-            return DeviceListItem(_listOfDevices[index]);
-          },
-        );
-      }
-    },
+    return FutureBuilder(
+      builder: (BuildContext context, AsyncSnapshot<List<Device>> projectSnap) {
+        if (projectSnap.connectionState == ConnectionState.waiting) {
+          print(projectSnap.connectionState.toString());
+          print('waiting .....');
+          return const Center(child: CircularProgressIndicator());
+        } else if (projectSnap.connectionState == ConnectionState.done) {
+          print(projectSnap.data);
+          if (!projectSnap.hasData) {
+            return const Text("No data received");
+          } else {
+            return ListView.builder(
+              itemCount: projectSnap.data?.length,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return DeviceListItem(projectSnap.data![index]);
+              },
+            );
+          }
+        } else {
+          return Text("data");
+        }
+      },
       future: _getListOfDevices(),
     );
   }
@@ -111,16 +120,14 @@ class _DeviceListItem extends State<DeviceListItem> {
             });
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
-                  "Device ${device.deviceName} is now ${device.isOn
-                      ? "on"
-                      : "off"}"),
+                  "Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
             ));
           },
           onLongPress: () {
             Navigator.push(context,
                 MaterialPageRoute<Widget>(builder: (BuildContext context) {
-                  return DeviceInformation(device);
-                }));
+              return DeviceInformation(device);
+            }));
           },
         ),
       ),

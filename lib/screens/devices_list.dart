@@ -6,16 +6,10 @@ import '../device.dart';
 
 class DevicesList extends StatefulWidget {
 
+
   // DevicesList(AuthAPI authAPI){
   //   _api=authAPI;
   // }
-
-  static Route route() {
-    return MaterialPageRoute(
-      builder: (context) => DevicesList(),
-    );
-  }
-
 
   @override
   State<StatefulWidget> createState() {
@@ -24,6 +18,7 @@ class DevicesList extends StatefulWidget {
 }
 
 class _DevicesListState extends State<DevicesList> {
+
   @override
   Widget build(BuildContext context) {
     return Center(

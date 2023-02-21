@@ -7,61 +7,72 @@ import 'package:testing/screens/devices_list.dart';
 import 'package:testing/screens/settings_page.dart';
 
 class HomeScreen extends StatefulWidget {
-  final AuthAPI api;
+  final String api;
 
   const HomeScreen({super.key, required this.api});
 
-  static Route route(AuthAPI api) {
+  static Route route(String apiKey) {
     return MaterialPageRoute(
-      builder: (context) => HomeScreen(api: api),
+      builder: (context) => HomeScreen(api: apiKey),
     );
   }
 
   @override
   State<StatefulWidget> createState() {
-    return _HomeScreenState();
+    return _HomeFormState(api);
   }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  late final AuthAPI _api;
+// class _HomeScreenState extends State<HomeScreen> {
+//   late final String _api;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     _api = widget.api;
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (context) => ContentBloc(authAPI: _api),
+//       child: BlocBuilder<ContentBloc, ContentState>(
+//         builder: (context, state) {
+//           return HomeView();
+//         },
+//       ),
+//     );
+//   }
+// }
+//
+// class HomeView extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocListener<ContentBloc, ContentState>(
+//         listener: (context, state) {
+//           if (state is ContendDownloadSuccess){
+//               HomeForm();
+//           }
+//
+//           else {
+//             //еще другое
+//           }
+//         });
+//   }
+// }
 
-  @override
-  void initState() {
-    super.initState();
-    _api = widget.api;
-  }
+// class HomeForm extends StatefulWidget {
+//   @override
+//   State<StatefulWidget> createState() {
+//     // TODO: implement createState
+//     return _HomeFormState();
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ContentBloc(authAPI: _api),
-      child: BlocBuilder<ContentBloc, ContentState>(
-        builder: (context, state) {
-          return HomeView();
-        },
-      ),
-    );
-  }
-}
+class _HomeFormState extends State<HomeScreen>{
 
-class HomeView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<ContentBloc, ContentState>(
-        listener: (context, state) {
-          if (state is ContendDownloadSuccess){
+  final String apiKey;
 
-          }
-
-          else {
-            //pizda
-          }
-        });
-  }
-}
-
-class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
   final List<BottomNavigationBarItem> myTabs = <BottomNavigationBarItem>[
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "My devices"),
@@ -72,6 +83,8 @@ class _HomeViewState extends State<HomeView> {
     DevicesList(),
     SettingsPage(),
   ];
+
+  _HomeFormState(this.apiKey);
 
   void _onItemTapped(int index) {
     setState(() {
