@@ -115,13 +115,24 @@ class _DeviceListItem extends State<DeviceListItem> {
           subtitle: Text(device.isOn ? "On" : "Off"),
           trailing: Icon(Icons.more_vert),
           onTap: () {
-            setState(() {
-              device.isOn = !device.isOn;
-            });
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-                  "Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
-            ));
+
+            try {
+              AuthAPI.switchStateOfDevice(device.id, !device.isOn);
+              setState(() {
+                device.isOn = !device.isOn;
+              });
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                    "Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
+              ));
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                    "Couldnt switch state of device ${device.deviceName}"),
+              ));
+            }
+
+
           },
           onLongPress: () {
             Navigator.push(context,

@@ -42,7 +42,9 @@ class AuthAPI extends BaseAPI {
     };
     print(header);
     try {
-      var res = await http.get(Uri.parse("http://localhost:8082/api/devices/list"), headers: header);
+      var res = await http.get(
+          Uri.parse("http://localhost:8082/api/devices/list"),
+          headers: header);
       print(res.body.toString());
       Iterable l = json.decode(res.body);
       parsedObjects = List<Device>.from(l.map((dev) => Device.fromJson(dev)));
@@ -56,5 +58,23 @@ class AuthAPI extends BaseAPI {
   // set apiKey(String val) => apiKey = val;
   void set api(String val) {
     apiKey = val;
+  }
+
+  static Future switchStateOfDevice(int deviceID, bool isOn) async {
+    var header = {
+      "Authorization": 'Bearer ' + apiKey,
+      "Content-Type": "application/json",
+    };
+    print("{$deviceID} device id");
+    var res = await http.put(
+        Uri.parse("http://localhost:8082/api/devices/$deviceID/state"),
+        body: jsonEncode(isOn),
+        headers: header);
+    if (res.statusCode != 200) {
+      print(res.statusCode);
+      throw Exception("Cannot switch state to {$isOn}");
+    }
+
+    return null;
   }
 }
