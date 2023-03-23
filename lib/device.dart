@@ -137,7 +137,7 @@ class _DeviceListItem extends State<DeviceListItem> {
           onLongPress: () {
             Navigator.push(context,
                 MaterialPageRoute<Widget>(builder: (BuildContext context) {
-              return DeviceInformation(device);
+              return DeviceInfo(device: device);
             }));
           },
         ),

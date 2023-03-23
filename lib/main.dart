@@ -1,12 +1,22 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/bloc/login/LoginBloc.dart';
 import 'package:testing/bloc/login/state/LoginState.dart';
 import 'package:testing/screens/login.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // final ByteData data = await rootBundle.load('assets/ca/lets-encrypt-r3.pem');
+  // HttpOverrides.global = CustomHttpOverrides(data);
+
+  runApp(MyApp());
+
 }
 
 class MyApp extends StatelessWidget {

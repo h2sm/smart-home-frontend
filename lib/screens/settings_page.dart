@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testing/screens/setup_new_device.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -17,13 +18,7 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget> [
-          Text("Settings", style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w300)),
-          Padding(padding: EdgeInsets.all(15)),
-          returnSettingCard("Add new device"),
-          returnSettingCard("Delete device"),
-          returnSettingCard("Change password"),
-          returnSettingCard("Delete Account"),
-          returnSettingCard("Log off")
+          SetupDeviceView()
         ],
       ),
     );
