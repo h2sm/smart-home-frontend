@@ -43,12 +43,13 @@ class DeviceInfo extends StatefulWidget {
 class _DeviceInfoState extends State<DeviceInfo> {
   @override
   Widget build(BuildContext context) {
-    Color pickerColor = Color(0xff443a49);
     var device = widget.device;
     var serial = device.deviceSerial;
     var isOn = device.isOn ? "On" : "Off";
     var deviceLocation = device.deviceLocation;
     var deviceName = device.deviceName;
+    var brgb = device.brgbValues;
+    Color pickerColor = Color.fromRGBO(brgb.indexOf(1), brgb.indexOf(2), brgb.indexOf(3), 1.0);
 
     Color currentColor = Colors.amber;
     List<Color> currentColors = [Colors.yellow, Colors.green];
