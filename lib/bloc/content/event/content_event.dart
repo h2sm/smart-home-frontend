@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-import '../../../device.dart';
+import '../../../dtos/device_dto.dart';
 
 abstract class ContentEvent extends Equatable {
   const ContentEvent([List props = const []]);

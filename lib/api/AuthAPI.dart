@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:nsd/nsd.dart';
-import 'package:testing/device.dart';
+import '../dtos/device_dto.dart';
 import 'BaseAPI.dart';
 
 class AuthAPI extends BaseAPI {
   static late String apiKey;
   static const bool _useLocal = true;
   static const String _SERVER =
-      _useLocal ? "http://127.0.0.1:8082" : "https://smarthome-controls.ru";
+      _useLocal ? "http://127.0.0.1:8082" : "https://www.smarthome-controls.ru";
 
   Future<http.Response> signUp(
       String email, String password, bool rememberMe) async {

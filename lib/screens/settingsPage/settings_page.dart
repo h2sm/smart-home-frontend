@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:testing/screens/setup_new_device.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -18,7 +17,7 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget> [
-          SetupDeviceView()
+          //SetupDeviceView()
         ],
       ),
     );

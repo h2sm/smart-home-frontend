@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:testing/device.dart';
+import '../../../dtos/device_dto.dart';
 
 class ContentState extends Equatable {
   const ContentState({

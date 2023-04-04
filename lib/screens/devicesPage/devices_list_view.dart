@@ -1,15 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:testing/api/AuthAPI.dart';
 
-import '../device.dart';
+import 'device_item.dart';
 
 class DevicesList extends StatefulWidget {
-
-
-  // DevicesList(AuthAPI authAPI){
-  //   _api=authAPI;
-  // }
 
   @override
   State<StatefulWidget> createState() {

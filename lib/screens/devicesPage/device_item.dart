@@ -1,35 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:testing/api/AuthAPI.dart';
-import 'package:testing/screens/deviceinformation.dart';
+import 'package:testing/screens/devicesPage/device_information.dart';
 
-class Device {
-  final int id;
-  final String deviceName;
-  final String deviceLocation;
-  final String deviceSerial;
-  final String localIpAddress;
-  bool isOn = true;
+import '../../dtos/device_dto.dart';
 
-  Device({
-    required this.id,
-    required this.deviceName,
-    required this.deviceLocation,
-    required this.deviceSerial,
-    required this.localIpAddress,
-  });
 
-  factory Device.fromJson(Map<String, dynamic> json) {
-    return Device(
-      id: json['id'],
-      deviceName: json['deviceName'],
-      deviceLocation: json['deviceLocation'],
-      deviceSerial: json['deviceSerial'],
-      localIpAddress: json['localIpAddress'],
-    );
-  }
-}
 
 class DeviceListPage extends StatefulWidget {
   const DeviceListPage({super.key});
