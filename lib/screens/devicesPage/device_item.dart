@@ -54,12 +54,6 @@ class _DeviceListPageState extends State<DeviceListPage> {
     );
   }
 
-//   return ListView.builder(
-//       shrinkWrap: true,
-//       itemCount: listOfDevices.length,
-//       itemBuilder: (BuildContext context, int index) {
-//         return DeviceListItem(listOfDevices[index]);
-//       });
 }
 
 class DeviceListItem extends StatefulWidget {

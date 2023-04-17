@@ -30,10 +30,10 @@ class AuthAPI extends BaseAPI {
         Uri.parse("$_SERVER/api/auth/login"),
         headers: super.headers,
         body: body);
-    print(response.body.toString());
     var parsed = jsonDecode(response.body.toString());
-    print(parsed['credentials']);
-    apiKey = parsed['credentials'];
+    print(parsed);
+    print(parsed['token']);
+    apiKey = parsed['token'];
     //test();
     return response;
   }

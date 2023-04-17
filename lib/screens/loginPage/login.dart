@@ -94,16 +94,16 @@ class _LoginPassword extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 2,
       child: TextField(
-        onChanged: ((value) {
-          context
-              .read<LoginBloc>()
-              .add(LoginPasswordChangedEvent(password: value));
-        }),
-        obscureText: true,
-        decoration: const InputDecoration(
-          hintText: 'Password',
-        ),
+      onChanged: ((value) {
+        context
+            .read<LoginBloc>()
+            .add(LoginPasswordChangedEvent(password: value));
+      }),
+      obscureText: true,
+      decoration: const InputDecoration(
+        hintText: 'Password',
       ),
+    ),
     );
   }
 }

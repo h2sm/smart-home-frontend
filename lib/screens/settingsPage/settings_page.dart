@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:testing/screens/settingsPage/add_device.dart';
+import 'package:testing/screens/settingsPage/add_hub.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return _SettingsPageState();
   }
-
 }
 
 class _SettingsPageState extends State<SettingsPage> {
@@ -16,34 +17,34 @@ class _SettingsPageState extends State<SettingsPage> {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget> [
+        children: <Widget>[
+          returnSettingCard("Add new Device", new NewDevice()),
+          returnSettingCard("Add new Hub", new NewHub()),
           //SetupDeviceView()
         ],
       ),
     );
   }
 
-  TextStyle boldTextStyle(){
-    return TextStyle(fontSize: 30.0, fontWeight: FontWeight.w500);
+  TextStyle boldTextStyle() {
+    return const TextStyle(fontSize: 30.0, fontWeight: FontWeight.w500);
   }
 
-  Card returnSettingCard(String settingName){
+  Card returnSettingCard(String settingName, StatefulWidget widget) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32))),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32))),
       child: ListTile(
-        leading: FlutterLogo(size: 56.0),
+        leading: const FlutterLogo(size: 56.0),
         title: Text(settingName),
-        trailing: Icon(Icons.settings_applications),
+        trailing: const Icon(Icons.add),
         onTap: () {
-          setState(() {
-            ////
-          });
-        },
-        onLongPress: () {
-        ////
+          Navigator.push(context,
+              MaterialPageRoute<Widget>(builder: (BuildContext context) {
+            return widget;
+          }));
         },
       ),
     );
   }
-
 }
