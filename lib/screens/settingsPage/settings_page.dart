@@ -20,7 +20,9 @@ class _SettingsPageState extends State<SettingsPage> {
         children: <Widget>[
           returnSettingCard("Add new Device", new NewDevice()),
           returnSettingCard("Add new Hub", new NewHub()),
-          //SetupDeviceView()
+          returnSettingCard("Delete device", new NewHub()),
+          returnSettingCard("Delete Hub", new NewHub()),
+
         ],
       ),
     );

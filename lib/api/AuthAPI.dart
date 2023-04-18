@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:nsd/nsd.dart';
+import 'package:testing/dtos/hub_dto.dart';
+import 'package:testing/dtos/new_device_dto.dart';
 import '../dtos/device_dto.dart';
 import 'BaseAPI.dart';
 
@@ -123,5 +125,44 @@ class AuthAPI extends BaseAPI {
     }
 
     return null;
+  }
+
+  static Future<http.Response> addNewDevice(AddedDevice device) async {
+    var header = {
+      "Authorization": 'Bearer $apiKey',
+      "Content-Type": "application/json",
+    };
+    var res = await http.post(Uri.parse("$_SERVER/api/devices/new"),
+        body: jsonEncode(device), headers: header);
+
+    if (res.statusCode != 200) {
+      print(res.statusCode);
+    }
+
+    return res;
+  }
+
+  static Future deleteDevice(int deviceId) async {}
+
+  static Future<List<HubDTO>> getListOfHubs() async {
+    List<HubDTO> parsedObjects = <HubDTO>[];
+    var header = {
+      "Authorization": 'Bearer $apiKey',
+      "Content-Type": "application/json",
+    };
+    var res =
+        await http.get(Uri.parse("$_SERVER/api/hub/list"), headers: header);
+
+    if (res.statusCode != 200) {
+      print(res.statusCode);
+    }
+    print('res.body');
+    print(res.body);
+    Iterable l = json.decode(res.body);
+    parsedObjects = List<HubDTO>.from(l.map((dev) => HubDTO.fromJson(dev)));
+    print('parsedObjects');
+    print(parsedObjects);
+
+    return parsedObjects;
   }
 }
