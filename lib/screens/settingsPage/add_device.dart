@@ -25,7 +25,7 @@ class _NewDeviceState extends State<NewDevice> {
         deviceLocation: deviceLocation.value.text,
         deviceSerial: deviceSerial.value.text,
         deviceLocalIpAddress: deviceLocalIpAddress.value.text,
-        hubId: selectedHub.hubId);
+        hubUuid: selectedHub.hubUuid);
 
     AuthAPI.addNewDevice(newDevice);
 

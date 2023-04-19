@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:nsd/nsd.dart';
 import 'package:testing/dtos/hub_dto.dart';
 import 'package:testing/dtos/new_device_dto.dart';
+import 'package:testing/dtos/new_hub_dto.dart';
 import '../dtos/device_dto.dart';
 import 'BaseAPI.dart';
 
@@ -147,7 +148,8 @@ class AuthAPI extends BaseAPI {
       "Content-Type": "application/json",
     };
 
-    var res = await http.delete(Uri.parse("$_SERVER/api/devices/$deviceId"), headers: header);
+    var res = await http.delete(Uri.parse("$_SERVER/api/devices/$deviceId"),
+        headers: header);
     if (res.statusCode != 200) {
       print(res.statusCode);
     }
@@ -173,5 +175,14 @@ class AuthAPI extends BaseAPI {
     print(parsedObjects);
 
     return parsedObjects;
+  }
+
+  static void addHub(NewHubDTO dto) async {
+    var header = {
+      "Authorization": 'Bearer $apiKey',
+      "Content-Type": "application/json",
+    };
+    var res = await http.post(Uri.parse("$_SERVER/api/hub"),
+        headers: header, body: dto);
   }
 }

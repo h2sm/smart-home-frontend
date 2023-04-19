@@ -3,21 +3,21 @@ class AddedDevice {
   String _deviceLocation;
   String _deviceSerial;
   String _deviceLocalIpAddress;
-  int _hubId;
+  String _hubUuid;
 
   AddedDevice({
     required String deviceName,
     required String deviceLocation,
     required String deviceSerial,
     required String deviceLocalIpAddress,
-    required int hubId,
+    required String hubUuid,
   })  : _deviceName = deviceName,
         _deviceLocation = deviceLocation,
         _deviceSerial = deviceSerial,
         _deviceLocalIpAddress = deviceLocalIpAddress,
-        _hubId = hubId;
+        _hubUuid = hubUuid;
 
-  int get hubId => _hubId;
+  String get hubId => _hubUuid;
 
   String get deviceName => _deviceName;
 

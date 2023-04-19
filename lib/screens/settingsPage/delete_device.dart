@@ -29,6 +29,11 @@ class _DeleteDeviceState extends State<DeleteDevice> {
 
   void submitData(){
     AuthAPI.deleteDevice(selectedDevice.id);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Device deleted"),
+      ),
+    );
   }
 
   @override

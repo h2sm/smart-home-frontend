@@ -1,20 +1,20 @@
 class HubDTO {
-  int _hubId;
+  String _hubUuid;
   String _hubName;
 
   HubDTO({
-    required int hubId,
+    required String hubUuid,
     required String hubName,
-  })  : _hubId = hubId,
+  })  : _hubUuid = hubUuid,
         _hubName = hubName;
 
-  int get hubId => _hubId;
+  String get hubUuid => _hubUuid;
 
   String get hubName => _hubName;
 
   factory HubDTO.fromJson(Map<String, dynamic> json) {
     return HubDTO(
-      hubId: json['hubId'],
+      hubUuid: json['hubUuid'],
       hubName: json['hubName'],
     );
   }
