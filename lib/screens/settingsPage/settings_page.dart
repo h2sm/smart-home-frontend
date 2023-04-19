@@ -4,6 +4,8 @@ import 'package:testing/screens/settingsPage/add_device.dart';
 import 'package:testing/screens/settingsPage/add_hub.dart';
 import 'package:testing/screens/settingsPage/delete_device.dart';
 
+import 'delete_hub.dart';
+
 class SettingsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -14,7 +16,6 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -22,8 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
           returnSettingCard("Add new Device", const NewDevice()),
           returnSettingCard("Add new Hub", const NewHub()),
           returnSettingCard("Delete device", const DeleteDevice()),
-          returnSettingCard("Delete Hub", const NewHub()),
-
+          returnSettingCard("Delete Hub", const DeleteHub()),
         ],
       ),
     );

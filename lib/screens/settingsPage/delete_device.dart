@@ -14,11 +14,13 @@ class DeleteDevice extends StatefulWidget {
 
 class _DeleteDeviceState extends State<DeleteDevice> {
   late Device selectedDevice;
+
   Future<List<Device>> _getDevicesList() async {
     return AuthAPI.getListOfDevices();
   }
 
-  List<DropdownMenuItem<Device>> generateDropdown(AsyncSnapshot<List<Device>> list) {
+  List<DropdownMenuItem<Device>> generateDropdown(
+      AsyncSnapshot<List<Device>> list) {
     return List.generate(
         list.data!.length,
         (index) => DropdownMenuItem<Device>(
@@ -27,7 +29,7 @@ class _DeleteDeviceState extends State<DeleteDevice> {
             ));
   }
 
-  void submitData(){
+  void submitData() {
     AuthAPI.deleteDevice(selectedDevice.id);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

@@ -185,4 +185,13 @@ class AuthAPI extends BaseAPI {
     var res = await http.post(Uri.parse("$_SERVER/api/hub"),
         headers: header, body: dto);
   }
+
+  static void deleteHub(String uuid) async {
+    var header = {
+      "Authorization": 'Bearer $apiKey',
+      "Content-Type": "application/json",
+    };
+    var res =
+        await http.delete(Uri.parse("$_SERVER/api/$uuid"), headers: header);
+  }
 }
