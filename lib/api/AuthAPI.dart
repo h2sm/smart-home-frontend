@@ -75,7 +75,6 @@ class AuthAPI extends BaseAPI {
       "blue": color.blue,
     };
 
-    print("{$body}");
     var res = await http.put(Uri.parse("$_SERVER/api/devices/$deviceID/color"),
         body: jsonEncode(body), headers: header);
     if (res.statusCode != 200) {
@@ -107,7 +106,7 @@ class AuthAPI extends BaseAPI {
   }
 
   // set apiKey(String val) => apiKey = val;
-  void set api(String val) {
+  set api(String val) {
     apiKey = val;
   }
 
@@ -142,7 +141,17 @@ class AuthAPI extends BaseAPI {
     return res;
   }
 
-  static Future deleteDevice(int deviceId) async {}
+  static void deleteDevice(int deviceId) async {
+    var header = {
+      "Authorization": 'Bearer $apiKey',
+      "Content-Type": "application/json",
+    };
+
+    var res = await http.delete(Uri.parse("$_SERVER/api/devices/$deviceId"), headers: header);
+    if (res.statusCode != 200) {
+      print(res.statusCode);
+    }
+  }
 
   static Future<List<HubDTO>> getListOfHubs() async {
     List<HubDTO> parsedObjects = <HubDTO>[];

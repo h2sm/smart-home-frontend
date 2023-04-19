@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:testing/screens/settingsPage/add_device.dart';
 import 'package:testing/screens/settingsPage/add_hub.dart';
+import 'package:testing/screens/settingsPage/delete_device.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -18,10 +19,10 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          returnSettingCard("Add new Device", new NewDevice()),
-          returnSettingCard("Add new Hub", new NewHub()),
-          returnSettingCard("Delete device", new NewHub()),
-          returnSettingCard("Delete Hub", new NewHub()),
+          returnSettingCard("Add new Device", const NewDevice()),
+          returnSettingCard("Add new Hub", const NewHub()),
+          returnSettingCard("Delete device", const DeleteDevice()),
+          returnSettingCard("Delete Hub", const NewHub()),
 
         ],
       ),

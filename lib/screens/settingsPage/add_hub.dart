@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewHub extends StatefulWidget {
+  const NewHub({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _NewHubState();
