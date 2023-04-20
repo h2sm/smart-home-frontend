@@ -6,8 +6,6 @@ import 'package:testing/dtos/new_device_dto.dart';
 class NewDevice extends StatefulWidget {
   NewDevice({super.key});
 
-  late HubDTO _selectedHub;
-
   @override
   State<StatefulWidget> createState() {
     return _NewDeviceState();
@@ -29,7 +27,7 @@ class _NewDeviceState extends State<NewDevice> {
         deviceLocation: deviceLocation.value.text,
         deviceSerial: deviceSerial.value.text,
         deviceLocalIpAddress: deviceLocalIpAddress.value.text,
-        hubUuid: widget._selectedHub.hubUuid);
+        hubUuid: selectedHub.hubUuid);
 
     AuthAPI.addNewDevice(newDevice);
 
