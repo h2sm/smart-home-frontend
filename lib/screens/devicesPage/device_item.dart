@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/screens/devicesPage/device_information.dart';
 
 import '../../dtos/device_dto.dart';
-
-
 
 class DeviceListPage extends StatefulWidget {
   const DeviceListPage({super.key});
@@ -53,7 +50,6 @@ class _DeviceListPageState extends State<DeviceListPage> {
       future: _getListOfDevices(),
     );
   }
-
 }
 
 class DeviceListItem extends StatefulWidget {
@@ -86,7 +82,6 @@ class _DeviceListItem extends State<DeviceListItem> {
           subtitle: Text(isOn ? "On" : "Off"),
           trailing: Icon(Icons.more_vert),
           onTap: () {
-
             try {
               AuthAPI.switchStateOfDevice(device.deviceId, isOn);
               setState(() {
@@ -98,17 +93,21 @@ class _DeviceListItem extends State<DeviceListItem> {
               ));
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                    "Couldnt switch state of device ${device.deviceName}"),
+                content:
+                    Text("Couldnt switch state of device ${device.deviceName}"),
               ));
             }
-
-
           },
           onLongPress: () {
             Navigator.push(context,
                 MaterialPageRoute<Widget>(builder: (BuildContext context) {
-              return DeviceInfo(device: device);
+              switch (device.type) {
+                case "BULB": return DeviceInfo(device: device, type: device.type);
+
+                case "VACUUM_CLEANER":
+                  {}
+              }
+              return Text("d");
             }));
           },
         ),

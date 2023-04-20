@@ -1,6 +1,7 @@
 class Device {
 
   int deviceId;
+  final String type;
   final String deviceName;
   final String deviceLocation;
   final String localIpAddress;
@@ -8,6 +9,7 @@ class Device {
   Map<String,dynamic> details;
 
   Device({
+    required this.type,
     required this.deviceId,
     required this.deviceName,
     required this.deviceLocation,
@@ -18,6 +20,7 @@ class Device {
 
   factory Device.fromJson(Map<String, dynamic> json) {
     return Device(
+      type: json['type'],
       deviceId: json['deviceId'],
       deviceName: json['deviceName'],
       deviceLocation: json['deviceLocation'],

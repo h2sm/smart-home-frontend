@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:testing/api/AuthAPI.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -31,9 +30,10 @@ const List<Color> colors = [
 ];
 
 class DeviceInfo extends StatefulWidget {
-  const DeviceInfo({required this.device});
+  const DeviceInfo({required this.device, required this.type});
 
   final Device device;
+  final String type;
 
   @override
   State<StatefulWidget> createState() {
@@ -83,8 +83,8 @@ class _DeviceInfoState extends State<DeviceInfo> {
                 children: [
                   Text(
                     deviceName,
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w300),
+                    style: const TextStyle(
+                        fontSize: 30.0, fontWeight: FontWeight.w300),
                   ),
                   Text('Serial number is $serial', style: returnTextStyle()),
                   Text('Located in $deviceLocation', style: returnTextStyle()),
