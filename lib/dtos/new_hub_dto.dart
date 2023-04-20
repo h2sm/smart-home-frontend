@@ -16,4 +16,12 @@ class NewHubDTO {
   String get hubName => _hubName;
 
   String get hubSecret => _hubSecret;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'hubUuid': _hubUuid,
+      'hubName': _hubName,
+      'hubSecret': _hubSecret,
+    };
+  }
 }

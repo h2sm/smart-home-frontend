@@ -4,7 +4,9 @@ import 'package:testing/dtos/hub_dto.dart';
 import 'package:testing/dtos/new_device_dto.dart';
 
 class NewDevice extends StatefulWidget {
-  const NewDevice({super.key});
+  NewDevice({super.key});
+
+  late HubDTO _selectedHub;
 
   @override
   State<StatefulWidget> createState() {
@@ -17,6 +19,8 @@ class _NewDeviceState extends State<NewDevice> {
   final deviceLocation = TextEditingController();
   final deviceSerial = TextEditingController();
   final deviceLocalIpAddress = TextEditingController();
+  late Future<List<HubDTO>> futureListOfHubs;
+  late List<HubDTO> listOfHubs = [];
   late HubDTO selectedHub;
 
   void submitData() {
@@ -25,7 +29,7 @@ class _NewDeviceState extends State<NewDevice> {
         deviceLocation: deviceLocation.value.text,
         deviceSerial: deviceSerial.value.text,
         deviceLocalIpAddress: deviceLocalIpAddress.value.text,
-        hubUuid: selectedHub.hubUuid);
+        hubUuid: widget._selectedHub.hubUuid);
 
     AuthAPI.addNewDevice(newDevice);
 
@@ -36,106 +40,122 @@ class _NewDeviceState extends State<NewDevice> {
     );
   }
 
-  List<DropdownMenuItem<HubDTO>> generateDropdown(
-      AsyncSnapshot<List<HubDTO>> list) {
-    var dropdownItems = List.generate(
-        list.data!.length,
-        (index) => DropdownMenuItem<HubDTO>(
-              value: list.data![index],
-              child: Text(list.data![index].hubName),
-            ));
-    return dropdownItems;
+  @override
+  void initState() {
+    super.initState();
+    AuthAPI.getListOfHubs().then((value) {
+      listOfHubs = value;
+      selectedHub = value.first;
+    });
   }
+
+  // List<DropdownMenuItem<HubDTO>> generateDropdown(
+  //     AsyncSnapshot<List<HubDTO>> list) {
+  //   var dropdownItems = List.generate(
+  //       list.data!.length,
+  //       (index) => DropdownMenuItem<HubDTO>(
+  //             value: list.data![index],
+  //             child: Text(list.data![index].hubName),
+  //           ));
+  //   return dropdownItems;
+  //}
 
   Future<List<HubDTO>> _getListOfHubs() async {
     var futureList = AuthAPI.getListOfHubs();
+    // futureList.then((value) {
+    //   value.map((e) => listOfHubs.add(e));
+    // });
     return futureList;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List<HubDTO>>(
         future: _getListOfHubs(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(
-              body: Center(
+          List<Widget> children = [];
+          if (!snapshot.hasData) {
+            children = <Widget>[
+              const Center(
                 child: CircularProgressIndicator(),
               ),
-            );
+            ];
           }
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              var dropdownList = generateDropdown(snapshot);
-              selectedHub = dropdownList.first.value!;
-              return Scaffold(
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    submitData();
-                  },
-                  backgroundColor: Colors.blue,
-                  child: const Icon(Icons.save),
-                ),
-                appBar: AppBar(
-                  title: const Text("Device Setup"),
-                ),
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: 280,
-                          padding: const EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: deviceName,
-                            autocorrect: true,
-                            decoration: const InputDecoration(
-                                hintText: 'Enter Device name here'),
-                          )),
-                      Container(
-                          width: 280,
-                          padding: const EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: deviceLocation,
-                            autocorrect: true,
-                            decoration: const InputDecoration(
-                                hintText: 'Enter device location'),
-                          )),
-                      Container(
-                          width: 280,
-                          padding: const EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: deviceSerial,
-                            autocorrect: true,
-                            decoration: const InputDecoration(
-                                hintText: 'Enter device serial number'),
-                          )),
-                      Container(
-                          width: 280,
-                          padding: const EdgeInsets.all(10.0),
-                          child: DropdownButton<HubDTO>(
-                            items: dropdownList,
-                            value: snapshot.data?.first,
-                            onChanged: (HubDTO? value) {
-                              print(value);
-                            },
-                          )),
-                      Container(
-                          width: 280,
-                          padding: const EdgeInsets.all(10.0),
-                          child: TextField(
-                            controller: deviceLocalIpAddress,
-                            autocorrect: true,
-                            decoration: const InputDecoration(
-                                hintText: 'Enter device local IP address'),
-                          )),
-                    ],
-                  ),
-                ),
-              );
-            }
+          if (snapshot.hasData) {
+            children = <Widget>[
+              Container(
+                  width: 280,
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextField(
+                    controller: deviceName,
+                    autocorrect: true,
+                    decoration: const InputDecoration(
+                        hintText: 'Enter Device name here'),
+                  )),
+              Container(
+                  width: 280,
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextField(
+                    controller: deviceLocation,
+                    autocorrect: true,
+                    decoration: const InputDecoration(
+                        hintText: 'Enter device location'),
+                  )),
+              Container(
+                  width: 280,
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextField(
+                    controller: deviceSerial,
+                    autocorrect: true,
+                    decoration: const InputDecoration(
+                        hintText: 'Enter device serial number'),
+                  )),
+              Container(
+                  width: 280,
+                  padding: const EdgeInsets.all(10.0),
+                  child: DropdownButton<HubDTO>(
+                    hint: const Text("Select hub"),
+                    items: listOfHubs.map((item) {
+                        return DropdownMenuItem<HubDTO>(
+                          value: item,
+                          child: Text(item.hubName),
+                        );
+                      }).toList(),
+                    value: selectedHub,
+                    onChanged: (newValue) async {
+                      setState(() {
+                      selectedHub = newValue!;
+                       });
+                    },
+                  )),
+              Container(
+                  width: 280,
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextField(
+                    controller: deviceLocalIpAddress,
+                    autocorrect: true,
+                    decoration: const InputDecoration(
+                        hintText: 'Enter device local IP address'),
+                  )),
+            ];
           }
-          return Text('snapshot.data![0].value?.hubName');
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.blue,
+              child: const Icon(Icons.save),
+              onPressed: () {
+                submitData();
+              },
+            ),
+            appBar: AppBar(
+              title: Text("Add device"),
+            ),
+            body: Center(
+              child: Column(
+                children: children,
+              ),
+            ),
+          );
         });
   }
 }

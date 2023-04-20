@@ -167,12 +167,8 @@ class AuthAPI extends BaseAPI {
     if (res.statusCode != 200) {
       print(res.statusCode);
     }
-    print('res.body');
-    print(res.body);
     Iterable l = json.decode(res.body);
     parsedObjects = List<HubDTO>.from(l.map((dev) => HubDTO.fromJson(dev)));
-    print('parsedObjects');
-    print(parsedObjects);
 
     return parsedObjects;
   }
@@ -183,7 +179,7 @@ class AuthAPI extends BaseAPI {
       "Content-Type": "application/json",
     };
     var res = await http.post(Uri.parse("$_SERVER/api/hub"),
-        headers: header, body: dto);
+        headers: header, body: json.encode(dto));
   }
 
   static void deleteHub(String uuid) async {

@@ -20,7 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          returnSettingCard("Add new Device", const NewDevice()),
+          returnSettingCard("Add new Device", NewDevice()),
           returnSettingCard("Add new Hub", const NewHub()),
           returnSettingCard("Delete device", const DeleteDevice()),
           returnSettingCard("Delete Hub", const DeleteHub()),
