@@ -26,7 +26,8 @@ const List<Color> colors = [
   Colors.grey,
   Colors.blueGrey,
   Colors.amberAccent,
-  Colors.limeAccent
+  Colors.limeAccent,
+  Colors.black,
 ];
 
 class DeviceInfo extends StatefulWidget {
@@ -45,11 +46,11 @@ class _DeviceInfoState extends State<DeviceInfo> {
   Widget build(BuildContext context) {
     var device = widget.device;
     var serial = device.deviceSerial;
-    var isOn = device.isOn ? "On" : "Off";
+    var isOn = device.details["isOn"] == "true" ? "On" : "Off";
     var deviceLocation = device.deviceLocation;
     var deviceName = device.deviceName;
-    var brgb = device.brgbValues;
-    Color pickerColor = Color.fromRGBO(brgb.indexOf(1), brgb.indexOf(2), brgb.indexOf(3), 1.0);
+    Color pickerColor = Color.fromRGBO(int.parse(device.details["r"]!),
+        int.parse(device.details["g"]!), int.parse(device.details["b"]!), 1.0);
 
     Color currentColor = Colors.amber;
     List<Color> currentColors = [Colors.yellow, Colors.green];
@@ -57,7 +58,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
     void changeColor(Color color) {
       setState(() {
         currentColor = color;
-        AuthAPI.changeColorOnDevice(device.id, color);
+        AuthAPI.changeColorOnDevice(device.deviceId, color);
       });
     }
 

@@ -92,7 +92,6 @@ class AuthAPI extends BaseAPI {
       "Authorization": 'Bearer ' + apiKey,
       "Content-Type": "application/json",
     };
-    print(header);
     try {
       var res = await http.get(Uri.parse("$_SERVER/api/devices/list"),
           headers: header);

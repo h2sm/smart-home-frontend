@@ -47,22 +47,8 @@ class _NewDeviceState extends State<NewDevice> {
     });
   }
 
-  // List<DropdownMenuItem<HubDTO>> generateDropdown(
-  //     AsyncSnapshot<List<HubDTO>> list) {
-  //   var dropdownItems = List.generate(
-  //       list.data!.length,
-  //       (index) => DropdownMenuItem<HubDTO>(
-  //             value: list.data![index],
-  //             child: Text(list.data![index].hubName),
-  //           ));
-  //   return dropdownItems;
-  //}
-
   Future<List<HubDTO>> _getListOfHubs() async {
     var futureList = AuthAPI.getListOfHubs();
-    // futureList.then((value) {
-    //   value.map((e) => listOfHubs.add(e));
-    // });
     return futureList;
   }
 

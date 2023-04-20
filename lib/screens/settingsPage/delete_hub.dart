@@ -13,6 +13,7 @@ class DeleteHub extends StatefulWidget {
 }
 
 class _DeleteHubState extends State<DeleteHub> {
+  late List<HubDTO> listOfHubs = [];
   late HubDTO selectedHub;
 
   List<DropdownMenuItem<HubDTO>> generateDropdown(
@@ -24,6 +25,15 @@ class _DeleteHubState extends State<DeleteHub> {
               child: Text(list.data![index].hubName),
             ));
     return dropdownItems;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    AuthAPI.getListOfHubs().then((value) {
+      listOfHubs = value;
+      selectedHub = value.first;
+    });
   }
 
   Future<List<HubDTO>> _getListOfHubs() async {
@@ -40,47 +50,50 @@ class _DeleteHubState extends State<DeleteHub> {
     return FutureBuilder(
         future: _getListOfHubs(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(
-              body: Center(
+          List<Widget> children = [];
+          if (!snapshot.hasData) {
+            children = <Widget>[
+              const Center(
                 child: CircularProgressIndicator(),
               ),
-            );
+            ];
           }
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              var dropdownList = generateDropdown(snapshot);
-              selectedHub = dropdownList.first.value!;
-              return Scaffold(
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: () {
-                      submitData();
+          if (snapshot.hasData) {
+            children = <Widget>[];
+            children = <Widget>[
+              Container(
+                  width: 280,
+                  padding: const EdgeInsets.all(10.0),
+                  child: DropdownButton<HubDTO>(
+                    items: listOfHubs.map((item) {
+                      return DropdownMenuItem<HubDTO>(
+                          value: item, child: Text(item.hubName));
+                    }).toList(),
+                    value: selectedHub,
+                    onChanged: (newValue) async {
+                      setState(() {
+                        selectedHub = newValue!;
+                      });
                     },
-                    backgroundColor: Colors.blue,
-                    child: const Icon(Icons.save),
-                  ),
-                  appBar: AppBar(
-                    title: const Text("Device Setup"),
-                  ),
-                  body: Center(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: 280,
-                          padding: const EdgeInsets.all(10.0),
-                          child: DropdownButton<HubDTO>(
-                            items: dropdownList,
-                            value: snapshot.data?.first,
-                            onChanged: (HubDTO? value) {
-                              selectedHub = value!;
-                            },
-                          ))
-                    ],
-                  )));
-            }
+                  ))
+            ];
           }
-          return const Text("peeepeee pooopooo");
+
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.blue,
+              child: const Icon(Icons.delete),
+              onPressed: () {
+                submitData();
+              },
+            ),
+            appBar: AppBar(
+              title: const Text("Delete hub"),
+            ),
+            body: Center(
+              child: Column(children: children),
+            ),
+          );
         });
   }
 }

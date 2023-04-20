@@ -1,32 +1,29 @@
 class Device {
 
-  final int id;
-  bool isOn;
+  int deviceId;
   final String deviceName;
   final String deviceLocation;
-  final String deviceSerial;
   final String localIpAddress;
-  List<int> brgbValues;
+  final String deviceSerial;
+  Map<String,dynamic> details;
 
   Device({
-    required this.id,
-    required this.isOn,
+    required this.deviceId,
     required this.deviceName,
     required this.deviceLocation,
     required this.deviceSerial,
     required this.localIpAddress,
-    required this.brgbValues,
+    required this.details,
   });
 
   factory Device.fromJson(Map<String, dynamic> json) {
     return Device(
-      id: json['id'],
-      isOn: json['isOn'],
+      deviceId: json['deviceId'],
       deviceName: json['deviceName'],
       deviceLocation: json['deviceLocation'],
       deviceSerial: json['deviceSerial'],
-      localIpAddress: json['localIpAddress'],
-      brgbValues: json['brgbValues'],
+      localIpAddress: json['localDeviceIp'],
+      details: json['details'],
     );
   }
 }

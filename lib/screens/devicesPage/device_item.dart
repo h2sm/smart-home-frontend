@@ -76,24 +76,25 @@ class _DeviceListItem extends State<DeviceListItem> {
 
   @override
   Widget build(BuildContext context) {
+    var isOn = device.details["isOn"] == "true";
     return Center(
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: borderRadius),
         child: ListTile(
           leading: FlutterLogo(size: 56.0),
           title: Text(device.deviceName),
-          subtitle: Text(device.isOn ? "On" : "Off"),
+          subtitle: Text(isOn ? "On" : "Off"),
           trailing: Icon(Icons.more_vert),
           onTap: () {
 
             try {
-              AuthAPI.switchStateOfDevice(device.id, !device.isOn);
+              AuthAPI.switchStateOfDevice(device.deviceId, isOn);
               setState(() {
-                device.isOn = !device.isOn;
+                isOn = !isOn;
               });
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(
-                    "Device ${device.deviceName} is now ${device.isOn ? "on" : "off"}"),
+                    "Device ${device.deviceName} is now ${isOn ? "on" : "off"}"),
               ));
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(

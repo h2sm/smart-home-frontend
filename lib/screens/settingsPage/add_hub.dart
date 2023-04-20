@@ -30,6 +30,7 @@ class _NewHubState extends State<NewHub> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.save),
         onPressed: () {
           submitData();
         },
