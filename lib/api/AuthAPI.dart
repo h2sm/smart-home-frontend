@@ -52,13 +52,7 @@ class AuthAPI extends BaseAPI {
           add!.forEach((element) {
             print(element.address);
           });
-          // var map = element.txt;
-          // map?.forEach((key, value) {
-          // String s = new String.fromCharCodes(value!);
-          // print(key + ' ' + s);
-          // });
         });
-        // put service in own collection, etc.
       }
     });
   }
@@ -105,9 +99,12 @@ class AuthAPI extends BaseAPI {
     return parsedObjects;
   }
 
-  // set apiKey(String val) => apiKey = val;
   set api(String val) {
     apiKey = val;
+  }
+
+  String get api {
+    return apiKey;
   }
 
   static Future switchStateOfDevice(int deviceID, bool isOn) async {
