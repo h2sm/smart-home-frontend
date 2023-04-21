@@ -42,7 +42,14 @@ class _DeleteHubState extends State<DeleteHub> {
   }
 
   void submitData() {
-    AuthAPI.deleteHub(selectedHub.hubUuid);
+    try {
+      AuthAPI.deleteHub(selectedHub.hubUuid);
+    } on Exception catch (e) {
+      print(e.runtimeType);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ));
+    }
   }
 
   @override

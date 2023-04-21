@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nsd/nsd.dart';
 import 'package:testing/dtos/hub_dto.dart';
@@ -184,6 +185,9 @@ class AuthAPI extends BaseAPI {
       "Content-Type": "application/json",
     };
     var res =
-        await http.delete(Uri.parse("$_SERVER/api/$uuid"), headers: header);
+        await http.delete(Uri.parse("$_SERVER/api/hub/$uuid"), headers: header);
+    if (res.statusCode != 200) {
+      throw Exception();
+    }
   }
 }
