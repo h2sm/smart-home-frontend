@@ -45,6 +45,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
   @override
   Widget build(BuildContext context) {
     var device = widget.device;
+    var type = widget.type;
     var serial = device.deviceSerial;
     var isOn = device.details["isOn"] == "true" ? "On" : "Off";
     var deviceLocation = device.deviceLocation;
@@ -63,7 +64,7 @@ class _DeviceInfoState extends State<DeviceInfo> {
     }
 
     TextStyle returnTextStyle() {
-      return TextStyle(fontSize: 20.0, fontWeight: FontWeight.w200);
+      return const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w200);
     }
 
     return Scaffold(

@@ -43,13 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
-  crypto:
-    dependency: transitive
-    description:
-      name: crypto
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -158,48 +151,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  nsd:
-    dependency: "direct main"
-    description:
-      name: nsd
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.0"
-  nsd_android:
-    dependency: transitive
-    description:
-      name: nsd_android
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.2"
-  nsd_ios:
-    dependency: transitive
-    description:
-      name: nsd_ios
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
-  nsd_macos:
-    dependency: transitive
-    description:
-      name: nsd_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
-  nsd_platform_interface:
-    dependency: transitive
-    description:
-      name: nsd_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.6.0"
-  nsd_windows:
-    dependency: transitive
-    description:
-      name: nsd_windows
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   path:
     dependency: transitive
     description:
@@ -207,13 +158,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.2"
-  plugin_platform_interface:
-    dependency: transitive
-    description:
-      name: plugin_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.4"
   provider:
     dependency: transitive
     description:
@@ -275,13 +219,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.1"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.7"
   vector_math:
     dependency: transitive
     description:

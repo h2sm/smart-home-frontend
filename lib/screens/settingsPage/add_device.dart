@@ -20,6 +20,8 @@ class _NewDeviceState extends State<NewDevice> {
   late Future<List<HubDTO>> futureListOfHubs;
   late List<HubDTO> listOfHubs = [];
   late HubDTO selectedHub;
+  late List<String> listOfDeviceTypes = [];
+  late String selectedType;
 
   void submitData() {
     var newDevice = AddedDevice(
@@ -40,11 +42,15 @@ class _NewDeviceState extends State<NewDevice> {
 
   @override
   void initState() {
-    super.initState();
     AuthAPI.getListOfHubs().then((value) {
       listOfHubs = value;
       selectedHub = value.first;
     });
+    AuthAPI.getDeviceTypes().then((value) {
+      listOfDeviceTypes = value;
+      selectedType= value.first;
+    });
+    super.initState();
   }
 
   Future<List<HubDTO>> _getListOfHubs() async {
@@ -97,19 +103,37 @@ class _NewDeviceState extends State<NewDevice> {
               Container(
                   width: 280,
                   padding: const EdgeInsets.all(10.0),
+                  child: DropdownButton<String>(
+                    hint: const Text("Select device type"),
+                    items: listOfDeviceTypes.map((item) {
+                        return DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(item),
+                        );
+                      }).toList(),
+                    value: selectedType,
+                    onChanged: (newValue) async {
+                      setState(() {
+                      selectedType = newValue!;
+                       });
+                    },
+                  )),
+              Container(
+                  width: 280,
+                  padding: const EdgeInsets.all(10.0),
                   child: DropdownButton<HubDTO>(
                     hint: const Text("Select hub"),
                     items: listOfHubs.map((item) {
-                        return DropdownMenuItem<HubDTO>(
-                          value: item,
-                          child: Text(item.hubName),
-                        );
-                      }).toList(),
+                      return DropdownMenuItem<HubDTO>(
+                        value: item,
+                        child: Text(item.hubName),
+                      );
+                    }).toList(),
                     value: selectedHub,
                     onChanged: (newValue) async {
                       setState(() {
-                      selectedHub = newValue!;
-                       });
+                        selectedHub = newValue!;
+                      });
                     },
                   )),
               Container(

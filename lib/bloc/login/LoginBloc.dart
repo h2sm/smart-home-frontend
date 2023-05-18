@@ -54,8 +54,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     try {
       var res = await _api.login(state.email, state.password, true);
-      var token = jsonDecode(res.body.toString())['token'];
-      emit(state.copyWith(message: 'Success', status: LoginStatus.success, apiKey: token));
+      if (res.statusCode == 200) {
+        var token = jsonDecode(res.body.toString())['token'];
+        emit(state.copyWith(
+            message: 'Success', status: LoginStatus.success, apiKey: token));
+      } else {
+        emit(state.copyWith(
+            message: "Login unsuccessful. Check your credentials", status: LoginStatus.failure, apiKey: null));
+      }
     } catch (e) {
       emit(state.copyWith(message: e.toString(), status: LoginStatus.failure));
     }

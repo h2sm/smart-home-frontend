@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testing/api/AuthAPI.dart';
 import 'package:testing/screens/devicesPage/device_information.dart';
+import 'package:testing/screens/devicesPage/vacuum_cleaner_device.dart';
 import '../../dtos/device_dto.dart';
 
 class DeviceListPage extends StatefulWidget {
@@ -66,47 +67,65 @@ class _DeviceListItemState extends State<DeviceListItem> {
     var isOn = device.details["isOn"] == "true";
     var isOnString = isOn ? "On" : "Off";
 
+    Icon returnLeadingIcon(String type) {
+      Icon icon = const Icon(Icons.device_unknown);
+      switch (type) {
+        case "BULB":
+          icon = const Icon(
+            Icons.lightbulb,
+            size: 40.0,
+          );
+          break;
+        case "VACUUM_CLEANER":
+          icon = const Icon(
+            Icons.cleaning_services,
+            size: 40.0,
+          );
+          break;
+        case "CAMERA":
+          icon = const Icon(
+            Icons.photo_camera_outlined,
+            size: 40.0,
+          );
+          break;
+      }
+      return icon;
+    }
+
+    Widget openDevicePage(Device device) {
+      late Widget widget;
+      switch (device.type) {
+        case "BULB": {
+          widget =  DeviceInfo(device: device, type: device.type);
+          break;
+        }
+        case "VACUUM_CLEANER": {
+          widget =  VacuumCleanerInfo(device: device);
+        }
+      }
+      return widget;
+    }
+
     return Center(
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: borderRadius),
         child: ListTile(
-          leading: const Icon(
-            Icons.lightbulb,
-            size: 40.0,
-          ),
+          leading: returnLeadingIcon(device.type),
           title: Text(device.deviceName),
           subtitle: Text(isOnString),
           trailing: const Icon(Icons.more_vert),
           onTap: () {
-            try {
-              AuthAPI.switchStateOfDevice(device.deviceId, !isOn);
-              setState(() {
-                widget.device.details["isOn"] = (!isOn).toString();
-                isOn = !isOn;
-                isOnString;
-              });
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(
-                    "Device ${device.deviceName} is now $isOnString"),
-              ));
-            } catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content:
-                    Text("Couldnt switch state of device ${device.deviceName}"),
-              ));
-            }
+            AuthAPI.switchStateOfDevice(device.deviceId, !isOn);
+            setState(() {
+              widget.device.details["isOn"] = (!isOn).toString();
+              isOn = !isOn;
+              isOnString;
+            });
           },
           onLongPress: () {
             Navigator.push(context,
                 MaterialPageRoute<Widget>(builder: (BuildContext context) {
-              switch (device.type) {
-                case "BULB":
-                  return DeviceInfo(device: device, type: device.type);
-
-                case "VACUUM_CLEANER":
-                  {}
-              }
-              return const Text("d");
+              return openDevicePage(device);
             }));
           },
         ),

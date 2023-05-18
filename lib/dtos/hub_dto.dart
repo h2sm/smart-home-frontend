@@ -8,6 +8,7 @@ class HubDTO {
   })  : _hubUuid = hubUuid,
         _hubName = hubName;
 
+
   String get hubUuid => _hubUuid;
 
   String get hubName => _hubName;

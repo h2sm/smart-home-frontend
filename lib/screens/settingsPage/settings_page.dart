@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:testing/screens/settingsPage/add_device.dart';
 import 'package:testing/screens/settingsPage/add_hub.dart';
 import 'package:testing/screens/settingsPage/delete_device.dart';
+import 'package:testing/screens/settingsPage/device_sharing.dart';
 
 import 'delete_hub.dart';
 
@@ -16,15 +17,19 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          returnSettingCard("Add new Device", NewDevice()),
-          returnSettingCard("Add new Hub", const NewHub()),
-          returnSettingCard("Delete device", const DeleteDevice()),
-          returnSettingCard("Delete Hub", const DeleteHub()),
-        ],
+    return Scaffold(
+      appBar: AppBar(title: const Text("Settings"),),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            returnSettingCard("Add new Device", NewDevice()),
+            returnSettingCard("Add new Hub", const NewHub()),
+            returnSettingCard("Delete device", const DeleteDevice()),
+            returnSettingCard("Delete Hub", const DeleteHub()),
+            returnSettingCard("Manage device sharing", DeviceSharing())
+          ],
+        ),
       ),
     );
   }
@@ -44,8 +49,8 @@ class _SettingsPageState extends State<SettingsPage> {
         onTap: () {
           Navigator.push(context,
               MaterialPageRoute<Widget>(builder: (BuildContext context) {
-            return widget;
-          }));
+                return widget;
+              }));
         },
       ),
     );

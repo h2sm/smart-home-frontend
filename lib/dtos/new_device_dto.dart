@@ -17,7 +17,7 @@ class AddedDevice {
         _deviceLocalIpAddress = deviceLocalIpAddress,
         _hubUuid = hubUuid;
 
-  String get hubId => _hubUuid;
+  String get hubUuid => _hubUuid;
 
   String get deviceName => _deviceName;
 
@@ -26,4 +26,15 @@ class AddedDevice {
   String get deviceSerial => _deviceSerial;
 
   String get deviceLocalIpAddress => _deviceLocalIpAddress;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'deviceType': "BULB",
+      'deviceName': _deviceName,
+      'deviceLocation': _deviceLocation,
+      'deviceSerial' : _deviceSerial,
+      'localIpAddress':_deviceLocalIpAddress,
+      'hubUuid': _hubUuid,
+    };
+  }
 }

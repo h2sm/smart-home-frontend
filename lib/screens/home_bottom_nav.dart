@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeFormState extends State<HomeScreen>{
   int _selectedIndex = 0;
-  final List<BottomNavigationBarItem> myTabs = <BottomNavigationBarItem>[
+  final List<BottomNavigationBarItem> myTabs = const <BottomNavigationBarItem>[
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "My devices"),
     BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
   ];

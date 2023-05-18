@@ -14,31 +14,17 @@ class DeleteHub extends StatefulWidget {
 
 class _DeleteHubState extends State<DeleteHub> {
   late List<HubDTO> listOfHubs = [];
+  late Future<List<HubDTO>> future;
   late HubDTO selectedHub;
-
-  List<DropdownMenuItem<HubDTO>> generateDropdown(
-      AsyncSnapshot<List<HubDTO>> list) {
-    var dropdownItems = List.generate(
-        list.data!.length,
-        (index) => DropdownMenuItem<HubDTO>(
-              value: list.data![index],
-              child: Text(list.data![index].hubName),
-            ));
-    return dropdownItems;
-  }
 
   @override
   void initState() {
-    super.initState();
-    AuthAPI.getListOfHubs().then((value) {
-      listOfHubs = value;
-      selectedHub = value.first;
+    future = AuthAPI.getListOfHubs();
+    future.then((value) => {
+      listOfHubs = value,
+      selectedHub = value.first,
     });
-  }
-
-  Future<List<HubDTO>> _getListOfHubs() async {
-    var futureList = AuthAPI.getListOfHubs();
-    return futureList;
+    super.initState();
   }
 
   void submitData() {
@@ -54,8 +40,8 @@ class _DeleteHubState extends State<DeleteHub> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _getListOfHubs(),
+    return FutureBuilder<List<HubDTO>>(
+        future: future,
         builder: (context, snapshot) {
           List<Widget> children = [];
           if (!snapshot.hasData) {
@@ -66,17 +52,17 @@ class _DeleteHubState extends State<DeleteHub> {
             ];
           }
           if (snapshot.hasData) {
-            children = <Widget>[];
             children = <Widget>[
               Container(
                   width: 280,
                   padding: const EdgeInsets.all(10.0),
                   child: DropdownButton<HubDTO>(
-                    items: listOfHubs.map((item) {
+                    items: snapshot.data?.map((item) {
                       return DropdownMenuItem<HubDTO>(
                           value: item, child: Text(item.hubName));
                     }).toList(),
                     value: selectedHub,
+                    hint: const Text('Select a hub'),
                     onChanged: (newValue) async {
                       setState(() {
                         selectedHub = newValue!;
@@ -91,7 +77,9 @@ class _DeleteHubState extends State<DeleteHub> {
               backgroundColor: Colors.blue,
               child: const Icon(Icons.delete),
               onPressed: () {
-                submitData();
+                setState(() {
+                  submitData();
+                });
               },
             ),
             appBar: AppBar(
