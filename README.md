@@ -11,5 +11,4 @@
 
 Для включения устройства достаточно тапнуть на соответствующий виджет, для настройки - полсекунды "зажать" виджет. 
 
-![Alt Text](https://github.com/h2sm/smart-home-frontend/blob/main/vidos.mp4)
-
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/r9grmMi7e3w/0.jpg)](http://www.youtube.com/watch?v=r9grmMi7e3w "Smarthome Flutter Demo")
