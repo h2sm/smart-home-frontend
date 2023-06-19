@@ -15,3 +15,6 @@
 
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/r9grmMi7e3w/0.jpg)](http://www.youtube.com/watch?v=r9grmMi7e3w "Smarthome Flutter Demo")
+
+
+Доступна веб-версия приложения: h2sm.github.io
